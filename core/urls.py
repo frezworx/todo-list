@@ -15,8 +15,8 @@ from core.views import (
 app_name = "core"
 
 urlpatterns = [
-    path("task_list/", TaskListView.as_view(), name="task-list"),
-    path("task_create/", TaskCreateView.as_view(), name="task-create"),
+    path("", TaskListView.as_view(), name="task-list"),
+    path("task/create/", TaskCreateView.as_view(), name="task-create"),
     path("task/<int:pk>/update", TaskUpdateView.as_view(), name="task-update"),
     path("task/<int:pk>/delete", TaskDeleteView.as_view, name="task-delete"),
     path("task/<int:pk>/toggle", TaskToggleView.as_view, name="task-toggle"),

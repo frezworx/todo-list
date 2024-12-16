@@ -1,8 +1,12 @@
 from django.views import generic
 
+from core.models import Task
+
 
 class TaskListView(generic.ListView):
-    pass
+    model = Task
+    template_name = "index.html"
+    context_object_name = "tasks"
 
 
 class TaskCreateView(generic.CreateView):
