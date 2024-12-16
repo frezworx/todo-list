@@ -5,7 +5,7 @@
       <h1 class="h2">Tags</h1>
       <button class="btn btn-primary">Add</button>
     </div>
-    <hr class="my-2 mb-3"/>
+    <hr class="my-2 mb-2"/>
     <table class="table">
       <thead class="table-light">
       <tr>
@@ -17,9 +17,9 @@
       <tbody>
       {% for tag in tags %}
         <tr>
-          <td>Name</td>
-          <td>Update</td>
-          <td>Delete</td>
+          <td>{{ tag.name }}</td>
+          <td><a href="" class="btn btn-secondary">Update</a></td>
+          <td><a href="" class="btn btn-secondary">Delete</a></td>
         </tr>
       {% endfor %}
       </tbody>
