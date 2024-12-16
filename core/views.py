@@ -1,12 +1,13 @@
 from django.views import generic
 
-from core.models import Task
+from core.models import Task, Tag
 
 
 class TaskListView(generic.ListView):
     model = Task
-    template_name = "index.html"
+    template_name = "pages/index.html"
     context_object_name = "tasks"
+    paginate_by = 5
 
 
 class TaskCreateView(generic.CreateView):
@@ -26,7 +27,10 @@ class TaskToggleView(generic.View):
 
 
 class TagListView(generic.ListView):
-    pass
+    model = Tag
+    template_name = "pages/tags.html"
+    context_object_name = "tags"
+    paginate_by = 5
 
 
 class TagsCreateView(generic.CreateView):

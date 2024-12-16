@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="col-md-10 p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h2">Tags</h1>
+      <button class="btn btn-primary">Add</button>
+    </div>
+    <hr class="my-2 mb-3"/>
+    <table class="table">
+      <thead class="table-light">
+      <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for tag in tags %}
+        <tr>
+          <td>Name</td>
+          <td>Update</td>
+          <td>Delete</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+
+{% endblock %}
