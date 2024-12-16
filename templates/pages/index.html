@@ -18,11 +18,8 @@
         <form method="post" action="{% url 'core:task-toggle' task.id %}"
               class="ms-auto">
           {% csrf_token %}
-          {% if task.done %}
-            <button type="submit" class="btn btn-secondary">Undo</button>
-          {% else %}
-            <button type="submit" class="btn btn-primary">Complete</button>
-          {% endif %}
+          <input type="hidden" name="page" value="{{ request.GET.page }}">
+          {% include "pages/task_toggle.html" %}
         </form>
 
       </div>

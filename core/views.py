@@ -2,7 +2,7 @@ import json
 
 from django.http import JsonResponse
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
@@ -69,5 +69,6 @@ def toggle_task_status(request, pk):
     if request.method == "POST":
         task.done = not task.done
         task.save()
-        return redirect("core:task-list")
+        page = request.POST.get("page", 1)
+        return redirect(f"{reverse("core:task-list")}?page={page}")
     return redirect("core:task-list")
