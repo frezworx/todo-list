@@ -1,5 +1,10 @@
+import json
+
+from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
 
 from core.forms import TaskForm, TagForm
 from core.models import Task, Tag
@@ -20,15 +25,16 @@ class TaskCreateView(generic.CreateView):
 
 
 class TaskUpdateView(generic.UpdateView):
-    pass
+    model = Task
+    form_class = TaskForm
+    template_name = "pages/task_create.html"
+    success_url = reverse_lazy("core:task-list")
 
 
 class TaskDeleteView(generic.DeleteView):
-    pass
-
-
-class TaskToggleView(generic.View):
-    pass
+    model = Task
+    template_name = "pages/task_confirm_delete.html"
+    success_url = reverse_lazy("core:task-list")
 
 
 class TagListView(generic.ListView):
@@ -46,8 +52,22 @@ class TagsCreateView(generic.CreateView):
 
 
 class TagsUpdateView(generic.UpdateView):
-    pass
+    model = Tag
+    form_class = TagForm
+    template_name = "pages/tag_create.html"
+    success_url = reverse_lazy("core:tags-list")
 
 
 class TagsDeleteView(generic.DeleteView):
-    pass
+    model = Tag
+    template_name = "pages/tag_confirm_delete.html"
+    success_url = reverse_lazy("core:tags-list")
+
+
+def toggle_task_status(request, pk):
+    task = Task.objects.get(pk=pk)
+    if request.method == "POST":
+        task.done = not task.done
+        task.save()
+        return redirect("core:task-list")
+    return redirect("core:task-list")
