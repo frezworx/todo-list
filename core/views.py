@@ -1,5 +1,7 @@
+from django.urls import reverse_lazy
 from django.views import generic
 
+from core.forms import TaskForm, TagForm
 from core.models import Task, Tag
 
 
@@ -11,7 +13,10 @@ class TaskListView(generic.ListView):
 
 
 class TaskCreateView(generic.CreateView):
-    pass
+    model = Task
+    form_class = TaskForm
+    template_name = "pages/task_create.html"
+    success_url = reverse_lazy("core:task-list")
 
 
 class TaskUpdateView(generic.UpdateView):
@@ -30,11 +35,14 @@ class TagListView(generic.ListView):
     model = Tag
     template_name = "pages/tags.html"
     context_object_name = "tags"
-    paginate_by = 5
+    paginate_by = 10
 
 
 class TagsCreateView(generic.CreateView):
-    pass
+    model = Tag
+    form_class = TagForm
+    template_name = "pages/tag_create.html"
+    success_url = reverse_lazy("core:tags-list")
 
 
 class TagsUpdateView(generic.UpdateView):
