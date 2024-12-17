@@ -15,7 +15,7 @@
               class="ms-3 fw-bold text-danger">{{ task.done }}
           </span>
         </h3>
-        <form method="post" action="{% url 'core:task-toggle' task.id %}"
+        <form method="post" action="{% url 'core:task-toggle' task.pk %}"
               class="ms-auto">
           {% csrf_token %}
           <input type="hidden" name="page" value="{{ request.GET.page }}">
