@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -64,11 +64,11 @@ class TagsDeleteView(generic.DeleteView):
     success_url = reverse_lazy("core:tags-list")
 
 
-def toggle_task_status(request, pk):
-    task = Task.objects.get(pk=pk)
-    if request.method == "POST":
+class ToggleTaskStatusView(generic.View):
+
+    def post(self, request, *args, **kwargs):
+        task = get_object_or_404(Task, pk=kwargs["pk"])
         task.done = not task.done
         task.save()
         page = request.POST.get("page", 1)
-        return redirect(f"{reverse("core:task-list")}?page={page}")
-    return redirect("core:task-list")
+        return redirect(f"{reverse('core:task-list')}?page={page}")
