@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="col-md-10 p-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h2">Tags</h1>
+      <a href="{% url 'core:tags-create' %}" class="btn btn-primary">Add</a>
+    </div>
+    <hr class="my-2 mb-2"/>
+    <table class="table">
+      <thead class="table-light">
+      <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for tag in tags %}
+        <tr>
+          <td>{{ tag.name }}</td>
+          <td><a href="{% url 'core:tags-update' tag.pk %}" class="btn btn-secondary">Update</a></td>
+          <td><a href="{% url 'core:tags-delete' tag.pk %}" class="btn btn-secondary">Delete</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+  {% include "includes/pagination.html" %}
+
+{% endblock %}

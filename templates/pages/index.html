@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="col-md-10 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h2">TODO list</h1>
+      <a href="{% url 'core:task-create' %}" class="btn btn-primary">Add
+        task</a>
+    </div>
+
+    <!-- Tascs -->
+    {% for task in tasks %}
+      <div class="d-flex align-items-center mb-4">
+        <h3 class="mb-0">{{ task.content }}
+          <span
+              class="ms-3 fw-bold text-danger">{{ task.done }}
+          </span>
+        </h3>
+        <form method="post" action="{% url 'core:task-toggle' task.id %}"
+              class="ms-auto">
+          {% csrf_token %}
+          <input type="hidden" name="page" value="{{ request.GET.page }}">
+          {% include "pages/task_toggle.html" %}
+        </form>
+
+      </div>
+      <p class="text-muted fw-bold mb-1 ">Created: {{ task.created_at }}
+        {% if not task.deadline %}
+        {% else %}<span style="color: #645252;"> Deadline:
+          {{ task.deadline }}</span>
+        {% endif %}
+      </p>
+      <p class="text-muted">Tags:
+        {% for tag in task.tags.all %}
+          {{ tag }}
+        {% endfor %}
+        <a href="{% url 'core:task-update' task.pk %}"
+           class="text-decoration-none fw-bold">Update</a>
+        <a href="{% url 'core:task-delete' task.pk %}"
+           class="text-decoration-none fw-bold">Delete</a>
+      </p>
+
+
+      <hr class="my-2"/>
+
+    {% endfor %}
+    {% include "includes/pagination.html" %}
+  </div>
+
+{% endblock %}
